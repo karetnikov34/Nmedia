@@ -6,4 +6,13 @@
     <string name="likes">likes</string>
     <string name="share">share</string>
     <string name="view">view</string>
+    <string name="menu_remove">Remove</string>
+    <string name="post_text">Post text</string>
+    <string name="description_post_save">save</string>
+    <string name="error_empty_content">text cannot be null or empty</string>
+    <string name="menu_edit">Edit post</string>
+    <string name="edit_message">Edit Message</string>
+    <string name="description_edit_cancel">edit cancel</string>
+    <string name="description_pencil">pencil</string>
+    <string name="edit_text">editable text</string>
 </resources>
