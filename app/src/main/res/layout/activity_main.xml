@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="content" />
+        app:constraint_referenced_ids="content, edit_message" />
 
     <EditText
         android:id="@+id/content"
@@ -52,7 +52,7 @@
         android:id="@+id/edit_pencil"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@android:color/white"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/description_pencil"
         app:layout_constraintBottom_toTopOf="@+id/content"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
         android:id="@+id/edit_cancel"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@android:color/white"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/description_edit_cancel"
         app:layout_constraintBottom_toTopOf="@+id/content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
         android:id="@+id/edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="@android:color/transparent"
         android:ellipsize="end"
         android:singleLine="true"
         android:text="@string/edit_text"
@@ -85,7 +85,7 @@
         android:id="@+id/edit_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="@android:color/transparent"
         android:singleLine="true"
         android:text="@string/edit_message"
         android:textColor="@color/blue"
