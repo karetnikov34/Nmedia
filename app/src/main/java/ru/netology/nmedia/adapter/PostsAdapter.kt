@@ -50,8 +50,8 @@ class PostViewHolder(
             content.text = post.content
             published.text = post.publishedDate
             likes.isChecked = post.likedByMe
-            likes.text = post.likesCount.toString()
-            share.text = post.shareCount.toString()
+            likes.text = compactDecimalFormat(post.likesCount)
+            share.text = compactDecimalFormat(post.shareCount)
             viewCount.text = compactDecimalFormat(post.viewCount)
             likes.setOnClickListener {
                 onInteractionListener.onLike(post)
