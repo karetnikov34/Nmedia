@@ -14,7 +14,8 @@ private val empty = Post(
     false,
     0,
     0,
-    0
+    0,
+    video = ""
 )
 
 class PostViewModel : ViewModel() {
@@ -30,9 +31,10 @@ class PostViewModel : ViewModel() {
         edited.value = empty
     }
 
-        fun edit(post: Post) {
+    fun edit(post: Post) {
         edited.value = post
     }
+
     fun changeContent(content: String) {
         edited.value?.let { post ->
             val text = content.trim()
