@@ -22,7 +22,10 @@ class MainActivity : AppCompatActivity() {
         val viewModel by viewModels<PostViewModel>()
 
         val newPostContract = registerForActivityResult(NewPostActivityContract()) { result ->
-            result ?: return@registerForActivityResult
+            if (result == null) {
+                viewModel.editCancel()
+                return@registerForActivityResult
+            }
             viewModel.changeContent(result)
             viewModel.save()
         }
