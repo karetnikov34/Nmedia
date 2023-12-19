@@ -1,10 +1,14 @@
 package ru.netology.nmedia.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.repository.PostRepository
+import ru.netology.nmedia.dto.repository.PostRepositoryFilesImpl
 import ru.netology.nmedia.dto.repository.PostRepositoryInMemoryImpl
+import ru.netology.nmedia.dto.repository.PostRepositorySharedPrefsImpl
 
 private val empty = Post(
     0,
@@ -18,8 +22,8 @@ private val empty = Post(
     video = ""
 )
 
-class PostViewModel : ViewModel() {
-    private val repository: PostRepository = PostRepositoryInMemoryImpl()
+class PostViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: PostRepository = PostRepositoryFilesImpl(application)
 
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
