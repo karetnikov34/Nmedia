@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
+import ru.netology.nmedia.activity.SinglePostFragment.Companion.longArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
@@ -76,6 +77,11 @@ class FeedFragment : Fragment() {
                     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video));
                     startActivity(browserIntent);
                 }
+            }
+
+            override fun onViewPost(post: Post) {
+                viewModel.edit(post)
+                findNavController().navigate(R.id.action_feedFragment_to_singlePostFragment, Bundle().apply{longArg = post.id})
             }
 
         }
