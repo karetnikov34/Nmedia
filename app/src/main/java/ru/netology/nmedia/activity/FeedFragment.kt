@@ -80,7 +80,7 @@ class FeedFragment : Fragment() {
             }
 
             override fun onViewPost(post: Post) {
-                viewModel.edit(post)
+                viewModel.selectPost(post)
                 findNavController().navigate(R.id.action_feedFragment_to_singlePostFragment, Bundle().apply{longArg = post.id})
             }
 
