@@ -24,7 +24,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
-    val SinglePost = MutableLiveData(empty)
 
     fun save() {
         edited.value?.let {
@@ -35,10 +34,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     fun edit(post: Post) {
         edited.value = post
-    }
-
-    fun selectPost(post: Post) {
-        SinglePost.value = post
     }
 
     fun changeContent(content: String) {
