@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.netology.nmedia.dto.Post
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class PostRepositoryFilesImpl( private val context: Context) : PostRepository {
     private val gson = Gson()
@@ -59,13 +61,13 @@ class PostRepositoryFilesImpl( private val context: Context) : PostRepository {
         data.value = posts
     }
 
-    override fun save(post: Post) {
+    override fun save(post: Post) { //
         posts = if (post.id == 0L) {
             listOf(
                 post.copy(
                     id = nextId++,
                     author = "Me",
-                    publishedDate = "now"
+                    publishedDate = SimpleDateFormat("EEE, d MMM yyyy, HH:mm").format(Calendar.getInstance().time)
                 )
             ) + posts
         } else {
