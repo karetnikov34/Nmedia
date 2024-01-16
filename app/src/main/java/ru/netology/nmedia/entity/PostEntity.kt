@@ -3,6 +3,8 @@ package ru.netology.nmedia.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.netology.nmedia.dto.Post
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 @Entity
 data class PostEntity (

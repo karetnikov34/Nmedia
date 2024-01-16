@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.repository.PostRepository
-import ru.netology.nmedia.dto.repository.PostRepositorySQLiteImpl
+import ru.netology.nmedia.dto.repository.PostRepositoryRoomImpl
 
 private val empty = Post(
     0,
@@ -17,11 +17,11 @@ private val empty = Post(
     0,
     0,
     0,
-    video = ""
+    ""
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: PostRepository = PostRepositorySQLiteImpl(
+    private val repository: PostRepository = PostRepositoryRoomImpl(
         AppDb.getInstance(application).postDao
     )
 
