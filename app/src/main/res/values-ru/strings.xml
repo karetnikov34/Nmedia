@@ -20,4 +20,9 @@
     <string name="add_new_post">Добавить новый пост</string>
     <string name="video">Видео</string>
     <string name="play_video">Запустить видео</string>
+    <string name="google_play_unavailable">Google Api недоступно</string>
+    <string name="channel_remote_name">Уведомления с сервера</string>
+    <string name="channel_remote_description">Уведомления с удалённого сервера</string>
+    <string name="notification_user_liked">%1$s поставил лайк посту %2$s</string>
+    <string name="notification_new_post">%1$s опубликовал новый пост:</string>
 </resources>
