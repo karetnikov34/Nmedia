@@ -32,7 +32,6 @@ class FeedFragment : Fragment() {
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post)
-                viewModel.loadPosts()
             }
 
             override fun onShare(post: Post) {
