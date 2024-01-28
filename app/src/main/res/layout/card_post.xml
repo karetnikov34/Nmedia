@@ -73,12 +73,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBarrier" />
 
+    <ImageView
+        android:id="@+id/attachments"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:contentDescription="@string/attachments"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintEnd_toEndOf="@+id/content"
+        app:layout_constraintStart_toStartOf="@+id/content" />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/contentBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content, video" />
+        app:constraint_referenced_ids="attachments" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/likes"
@@ -127,27 +138,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contentBarrier" />
 
-    <ImageView
-        android:id="@+id/video"
-        android:layout_width="380dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/blender"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content"
-        android:contentDescription="@string/video" />
+<!--    <ImageView-->
+<!--        android:id="@+id/video"-->
+<!--        android:layout_width="380dp"-->
+<!--        android:layout_height="180dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:contentDescription="@string/video"-->
+<!--        android:src="@drawable/blender"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/content" />-->
 
-    <ImageView
-        android:id="@+id/videoButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:src="@drawable/ic_play_circle_outline_48"
-        app:layout_constraintBottom_toBottomOf="@+id/video"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/video"
-        android:contentDescription="@string/play_video" />
+<!--    <ImageView-->
+<!--        android:id="@+id/videoButton"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="8dp"-->
+<!--        android:contentDescription="@string/play_video"-->
+<!--        android:src="@drawable/ic_play_circle_outline_48"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/video"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/video" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

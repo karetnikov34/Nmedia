@@ -15,8 +15,10 @@ private val empty = Post(
     "",
     "",
     "",
+    "",
     false,
-    0
+    0,
+    null
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {

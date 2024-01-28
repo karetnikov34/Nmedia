@@ -48,6 +48,7 @@ dependencies {
     def lifecycle_version = "2.6.2"
     def nav_version = "2.3.4"
     def okhttp_version = "4.12.0"
+    def glide_version = "4.16.0"
 
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -66,6 +67,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 

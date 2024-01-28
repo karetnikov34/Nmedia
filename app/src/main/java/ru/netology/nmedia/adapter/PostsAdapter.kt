@@ -1,11 +1,13 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
@@ -45,12 +47,32 @@ class PostViewHolder(
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
+        val url = "http://10.0.2.2:9999"
+
         with(binding) {
             author.text = post.author
             content.text = post.content
             published.text = post.published
             likes.isChecked = post.likedByMe
             likes.text = compactDecimalFormat(post.likes)
+            Glide.with(avatar)
+                .load("$url/avatars/${post.authorAvatar}")
+                .error(R.drawable.ic_error_100dp)
+                .placeholder(R.drawable.ic_loading_100dp)
+                .circleCrop()
+                .timeout(10_000)
+                .into(avatar)
+            if(post.attachment == null){
+                attachments.visibility = View.GONE
+            } else {
+                attachments.visibility = View.VISIBLE
+                Glide.with(attachments)
+                    .load("$url/images/${post.attachment?.url}")
+                    .error(R.drawable.ic_error_100dp)
+                    .placeholder(R.drawable.ic_loading_100dp)
+                    .timeout(10_000)
+                    .into(attachments)
+            }
             likes.setOnClickListener {
                 onInteractionListener.onLike(post)
             }
