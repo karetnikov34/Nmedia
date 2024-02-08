@@ -1,6 +1,7 @@
 package ru.netology.nmedia.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -43,8 +44,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 _data.value = FeedModel(posts = posts, empty = posts.isEmpty())
             }
 
-            override fun onError(e: Exception) {
+            override fun onError(e: Exception, code: Int) {
                 _data.value = FeedModel(error = true)
+                if (code != 0) responseAnswer(code)
             }
         })
     }
@@ -56,8 +58,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                     _postCreated.value = Unit
                 }
 
-                override fun onError(e: Exception) {
+                override fun onError(e: Exception, code: Int) {
                     _data.value = FeedModel(error = true)
+                    if (code != 0) responseAnswer(code)
                 }
             }
             )
@@ -93,8 +96,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                                 })
                 }
 
-                override fun onError(e: Exception) {
+                override fun onError(e: Exception, code: Int) {
                     _data.value = FeedModel(error = true)
+                    if (code != 0) responseAnswer(code)
                 }
 
             })
@@ -112,8 +116,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                                 })
                 }
 
-                override fun onError(e: Exception) {
+                override fun onError(e: Exception, code: Int) {
                     _data.value = FeedModel(error = true)
+                    if (code != 0) responseAnswer(code)
                 }
 
             })
@@ -129,9 +134,39 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                     )
             }
 
-            override fun onError(e: Exception) {
+            override fun onError(e: Exception, code: Int) {
                 _data.value = FeedModel(error = true)
+                if (code != 0) responseAnswer(code)
             }
         })
+    }
+
+    fun responseAnswer(code: Int) = when (code) {
+        in 100..199 -> Toast.makeText(
+            getApplication(),
+            "Informational response $code",
+            Toast.LENGTH_LONG
+        ).show()
+
+        in 300..399 -> Toast.makeText(
+            getApplication(),
+            "Redirection message $code",
+            Toast.LENGTH_LONG
+        ).show()
+
+        in 400..499 -> Toast.makeText(
+            getApplication(),
+            "Client error response $code",
+            Toast.LENGTH_LONG
+        ).show()
+
+        in 500..599 -> Toast.makeText(
+            getApplication(),
+            "Server error response $code",
+            Toast.LENGTH_LONG
+        ).show()
+
+        else -> Toast.makeText(getApplication(), "Non-standard response $code", Toast.LENGTH_LONG)
+            .show()
     }
 }
