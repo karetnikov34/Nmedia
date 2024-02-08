@@ -40,11 +40,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         _data.value = FeedModel(loading = true)
         repository.getAllAsync(object : PostRepository.GetCallback<List<Post>> {
             override fun onSuccess(posts: List<Post>) {
-                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+                _data.value = FeedModel(posts = posts, empty = posts.isEmpty())
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+                _data.value = FeedModel(error = true)
             }
         })
     }
@@ -53,11 +53,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value?.let {
             repository.saveAsync(it, object : PostRepository.GetCallback<Unit> {
                 override fun onSuccess(posts: Unit) {
-                    _postCreated.postValue(Unit)
+                    _postCreated.value = Unit
                 }
 
                 override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
+                    _data.value = FeedModel(error = true)
                 }
             }
             )
@@ -82,7 +82,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         if (post.likedByMe) {
             repository.unlikeByIdAsync(post.id, object : PostRepository.GetCallback<Post> {
                 override fun onSuccess(posts: Post) {
-                    _data.postValue(
+                    _data.value =
                         FeedModel(
                             posts = _data.value?.posts.orEmpty()
                                 .map {
@@ -91,18 +91,17 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                                         likes = posts.likes
                                     ) else it
                                 })
-                    )
                 }
 
                 override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
+                    _data.value = FeedModel(error = true)
                 }
 
             })
         } else {
             repository.likeByIdAsync(post.id, object : PostRepository.GetCallback<Post> {
                 override fun onSuccess(posts: Post) {
-                    _data.postValue(
+                    _data.value =
                         FeedModel(
                             posts = _data.value?.posts.orEmpty()
                                 .map {
@@ -111,11 +110,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                                         likes = posts.likes
                                     ) else it
                                 })
-                    )
                 }
 
                 override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
+                    _data.value = FeedModel(error = true)
                 }
 
             })
@@ -125,14 +123,14 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun removeById(id: Long) {
         repository.removeByIdAsync(id, object : PostRepository.GetCallback<Unit> {
             override fun onSuccess(posts: Unit) {
-                _data.postValue(
+                _data.value =
                     _data.value?.copy(posts = _data.value?.posts.orEmpty()
                         .filter { it.id != id }
-                    ))
+                    )
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+                _data.value = FeedModel(error = true)
             }
         })
     }
