@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -64,6 +65,10 @@ class FeedFragment : Fragment() {
             binding.emptyText.isVisible = state.empty
         }
 
+        viewModel.requestCode.observe(viewLifecycleOwner) { requestCode ->
+            responseAnswer(requestCode)
+        }
+
         binding.retryButton.setOnClickListener {
             viewModel.loadPosts()
         }
@@ -78,5 +83,34 @@ class FeedFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun responseAnswer(code: Int) = when (code) {
+        in 100..199 -> Toast.makeText(
+            activity,
+            "Informational response $code",
+            Toast.LENGTH_LONG
+        ).show()
+
+        in 300..399 -> Toast.makeText(
+            activity,
+            "Redirection message $code",
+            Toast.LENGTH_LONG
+        ).show()
+
+        in 400..499 -> Toast.makeText(
+            activity,
+            "Client error response $code",
+            Toast.LENGTH_LONG
+        ).show()
+
+        in 500..599 -> Toast.makeText(
+            activity,
+            "Server error response $code",
+            Toast.LENGTH_LONG
+        ).show()
+
+        else -> Toast.makeText(activity, "Non-standard response $code", Toast.LENGTH_LONG)
+            .show()
     }
 }
