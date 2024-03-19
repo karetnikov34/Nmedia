@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
@@ -32,7 +32,11 @@ class FeedFragment : Fragment() {
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
-                viewModel.likeById(post)
+                if (post.likedByMe) {
+                    viewModel.unlikeById(post.id)
+                } else {
+                    viewModel.likeById(post.id)
+                }
             }
 
             override fun onShare(post: Post) {
@@ -48,7 +52,9 @@ class FeedFragment : Fragment() {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
-                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment, Bundle().apply{textArg = post.content})
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_newPostFragment,
+                    Bundle().apply { textArg = post.content })
             }
 
             override fun onRemove(post: Post) {
@@ -60,57 +66,34 @@ class FeedFragment : Fragment() {
         binding.list.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { state ->
             adapter.submitList(state.posts)
-            binding.progress.isVisible = state.loading
-            binding.errorGroup.isVisible = state.error
             binding.emptyText.isVisible = state.empty
         }
 
-        viewModel.requestCode.observe(viewLifecycleOwner) { requestCode ->
-            responseAnswer(requestCode)
+        viewModel.dataState.observe(viewLifecycleOwner) { state ->
+            binding.progress.isVisible = state.loading
+//            binding.errorGroup.isVisible = state.error
+            binding.swipeRefresh.isRefreshing = state.refreshing
+            if (state.error) {
+                Snackbar.make(binding.root, R.string.error_loading, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.retry_loading) {
+                        viewModel.refreshPosts()
+                    }
+                    .show()
+            }
         }
 
-        binding.retryButton.setOnClickListener {
-            viewModel.loadPosts()
-        }
+//        binding.retryButton.setOnClickListener {
+//            viewModel.loadPosts()
+//        }
 
         binding.newPostButton.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.loadPosts()
-            binding.swipeRefresh.isRefreshing = false
+            viewModel.refreshPosts()
         }
 
         return binding.root
-    }
-
-    fun responseAnswer(code: Int) = when (code) {
-        in 100..199 -> Toast.makeText(
-            activity,
-            "Informational response $code",
-            Toast.LENGTH_LONG
-        ).show()
-
-        in 300..399 -> Toast.makeText(
-            activity,
-            "Redirection message $code",
-            Toast.LENGTH_LONG
-        ).show()
-
-        in 400..499 -> Toast.makeText(
-            activity,
-            "Client error response $code",
-            Toast.LENGTH_LONG
-        ).show()
-
-        in 500..599 -> Toast.makeText(
-            activity,
-            "Server error response $code",
-            Toast.LENGTH_LONG
-        ).show()
-
-        else -> Toast.makeText(activity, "Non-standard response $code", Toast.LENGTH_LONG)
-            .show()
     }
 }
