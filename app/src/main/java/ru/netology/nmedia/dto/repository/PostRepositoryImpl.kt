@@ -32,9 +32,8 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-            dao.insert(body.toEntity())
+            dao.insert(body.toEntity().map { it.copy(hidden = true) })
             emit(body.size)
         }
     }
@@ -55,6 +54,7 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
             throw UnknownError
         }
     }
+
     override suspend fun likeById(id: Long) {
         dao.likeById(id)
         try {
@@ -129,5 +129,9 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
 
     override suspend fun getById(id: Long) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun showNewPosts() {
+        dao.updateHiddenStatus()
     }
 }

@@ -13,4 +13,5 @@ interface PostRepository {
     suspend fun removeById(id: Long)
     suspend fun save(post: Post)
     suspend fun getById(id: Long)
+    suspend fun showNewPosts()
 }

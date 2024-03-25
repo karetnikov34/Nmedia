@@ -138,4 +138,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+    fun showNewPosts() {
+        viewModelScope.launch {
+                repository.showNewPosts()
+                }
+    }
 }

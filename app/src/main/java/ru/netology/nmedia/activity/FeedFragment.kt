@@ -88,7 +88,11 @@ class FeedFragment : Fragment() {
         }
 
         viewModel.newerCount.observe(viewLifecycleOwner) { state ->
-            // TODO: just log it, interaction must be in homework
+            if (state == 0) {
+                binding.newPosts.hide()
+            } else {
+                binding.newPosts.show()
+            }
             println(state)
         }
 
@@ -102,6 +106,12 @@ class FeedFragment : Fragment() {
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refreshPosts()
+            binding.newPosts.hide()
+        }
+
+        binding.newPosts.setOnClickListener {
+            viewModel.showNewPosts()
+            binding.newPosts.hide()
         }
 
         return binding.root
